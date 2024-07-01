@@ -1,7 +1,7 @@
 <template>
   <div class="top-toolbar">
     <div class="top-toolbar__logo">
-      <IliaButton
+      <UniversalButton
         @click="handleClickUserMenu"
         :label="logoTitle"
         font-size="1.125rem"
@@ -15,7 +15,7 @@
     </div>
     <div class="top-toolbar__nav-container">
       <div class="top-toolbar__nav">
-        <IliaButton
+        <UniversalButton
           v-for="item in navigationOptions"
           :label="item.label"
           @click="router.push({ name: item.name })"
@@ -41,10 +41,11 @@ import { storeToRefs } from "pinia";
 import type { NavigationItem } from "@/types/common";
 import { useRoute } from "vue-router";
 import { fullUserName } from "@/helpers/common";
-import IliaButton from "@/components/schedule/IliaButton.vue";
-import ProfileSidebar from "@/components/schedule/ProfileSidebar.vue";
+import UniversalButton from "@/components/buttons/UniversalButton.vue";
+import ProfileSidebar from "@/modules/schedule/components/sidebars/ProfileSidebar.vue";
 import { generateAvailableAppsList } from "@/helpers/navigation";
 import Menu from "primevue/menu";
+import { CredentialDatabase } from "@/modules/credentials/classes/CredentialDatabase";
 
 const route = useRoute();
 
@@ -68,7 +69,6 @@ const logoTitle = computed<string>(() => {
 
 const navigationOptions = computed<NavigationItem[]>(() => {
   if (!route.name) {
-    console.error("Error: route name is undefined: ", route.name);
     return [];
   }
 
@@ -115,7 +115,7 @@ const menuAuthorized = computed(() => {
       label: lang.label.profile,
       items: [
         {
-          label: fullUserName(user.value),
+          label: user.value?.email,
           icon: "pi pi-user",
           command: () => {
             profileSidebar.value.open();
@@ -187,6 +187,7 @@ const onClickLogin = () => {
 
 const onClickLogout = () => {
   router.push(routes.login.path);
+  CredentialDatabase.unload();
   resetAuthUser();
   resetAuthToken();
   updateIsAuthorized(false);

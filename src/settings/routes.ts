@@ -14,6 +14,13 @@ export const routes: Record<string, LocalRoute> = {
     isPublic: true,
   },
 
+  register: {
+    path: "/register",
+    name: "register",
+    title: "Register",
+    isPublic: true,
+  },
+
   home: {
     path: "/",
     name: "home",
@@ -45,13 +52,37 @@ export const routes: Record<string, LocalRoute> = {
   words: {
     path: "/words",
     name: "words",
-    title: "Words Cards",
+    title: "Word Game",
+    isPublic: false,
+  },
+
+  credentials: {
+    path: "/credentials",
+    name: "credentials",
+    title: "Credentials",
+    isPublic: false,
+  },
+  credentialsCredentials: {
+    path: "credentials",
+    name: "credentialsCredentials",
+    title: "Credentials",
+    isPublic: false,
+  },
+  credentialsTypes: {
+    path: "types",
+    name: "credentialsTypes",
+    title: "Credential Types",
     isPublic: false,
   },
 };
 
+export const credentialsRoutes = Object.values(routes).filter((item) =>
+  ["credentialsCredentials", "credentialsTypes"].includes(item.name)
+);
+
 export const publicRouteNames = [
   routes.login.name,
+  routes.register.name,
   routes.home.name,
   routes.usefulLinks.name,
 ];

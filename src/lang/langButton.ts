@@ -10,8 +10,11 @@ export default {
   delete: "Delete",
   login: "Login",
   manageTags: "Manage tags",
+  newCredential: "New Credential",
+  newCredentialType: "New Credential Type",
   ok: "OK",
+  register: "Register",
   save: "Save",
   usefulLinks: "Useful Links",
-  wordsApp: "Words Cards",
+  wordsApp: "Word Game",
 };
